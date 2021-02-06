@@ -20,7 +20,7 @@ const Menu = () => {
         if(i>0){
 
             const categoriaAnterior=menu[i - 1]._data.categoria;
-            console.log(categoriaAnterior);
+            // console.log(categoriaAnterior);
             if(categoriaAnterior!==categoria){
                 return(
                     <Separator style={styles.separador}>
@@ -47,7 +47,9 @@ const Menu = () => {
                     {menu.length===0 &&(<Spinner color='yellow' />)}
                     <List style={styles.list} >
                             {menu.map((item,i)=>{
-                                const{imagen,nombre,descripcion,categoria,precio,id}=item._data;
+                                const{imagen,nombre,descripcion,categoria,precio}=item._data;
+                                const{id}=item;
+                                // console.log(id);
                                 return(
                                     <Fragment key={id}>
                                         {mostrarHeading(categoria,i)}
@@ -59,7 +61,7 @@ const Menu = () => {
                                             navigation.navigate('DetailRecipe')
                                         }}
                                         >
-                                        <Thumbnail  source={{uri:imagen}}/>
+                                        <Thumbnail source={{uri:imagen}}/>
                                             <Body>
                                                 <Text>{nombre}</Text>
                                                 <Text note numberOfLines={2}>

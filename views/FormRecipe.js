@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const FormRecipe = () => {
     const {platillo,setPedido}=useContext(PedidosContext);
+    const {id}=platillo;
     const {nombre,imagen,descripcion,precio}=platillo._data;
     // cantidades:
     const [cantidad, setCantidad] = useState(1);
@@ -47,8 +48,9 @@ const FormRecipe = () => {
                     onPress:()=>{
                         const pedido={
                             ...platillo._data,
+                            id,
                             cantidad,
-                            total
+                            total,
                         }
                         setPedido(pedido);
                         // pedido al arreglo del context

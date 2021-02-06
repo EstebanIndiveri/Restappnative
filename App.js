@@ -11,6 +11,9 @@ import Menu from './views/Menu';
 import FormRecipe from './views/FormRecipe';
 import ProgressOrder from './views/ProgressOrder';
 
+// components
+import ResuemnButton from './components/ui/ResumenButton';
+
 // state;
 import FirebaseState from './context/contextFirebase/firebaseState';
 import PedidosState from './context/pedidos/pedidosState';
@@ -54,6 +57,7 @@ const App = () => {
             component={Menu}
             options={{
               title:'Nuestro Menú',
+              headerRight:props=><ResuemnButton/>
             }}
             />
             <Stack.Screen
