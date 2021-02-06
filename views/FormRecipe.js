@@ -1,4 +1,4 @@
-import React, { Fragment,useContext,useState } from 'react';
+import React, { Fragment,useContext,useState,useEffect } from 'react';
 import {StyleSheet} from 'react-native';
 import PedidosContext from '../context/pedidos/pedidosContext';
 import {Container,Content,Form,Icon,Button,Grid,Col,Text,Input} from 'native-base'
@@ -9,6 +9,19 @@ const FormRecipe = () => {
     const {nombre,imagen,descripcion,precio}=platillo._data;
     // cantidades:
     const [cantidad, setCantidad] = useState(1);
+    const [total,setTotal]=useState(0);
+
+    useEffect(()=>{
+        getTotal();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[cantidad]);
+
+    // total delivery
+    const getTotal=()=>{
+        const totalToPay=precio * cantidad;
+        setTotal(totalToPay);
+    }
 
     const decrementarOne=()=>{
         if(cantidad>1){
@@ -59,6 +72,7 @@ const FormRecipe = () => {
                             </Col>
 
                         </Grid>
+                        <Text style={globalStyles.cantida}>Subtotal: ${total}</Text>
                     </Form>
                 </Content>
             </Container>
