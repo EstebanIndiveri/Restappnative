@@ -26,6 +26,10 @@ const globalStyles=StyleSheet.create({
         height:300,
         width:'100%'
     },
+    imagenOrder:{
+        height:200,
+        width:'100%'
+    },
     cantida:{
         marginVertical:20,
         textAlign:'center',

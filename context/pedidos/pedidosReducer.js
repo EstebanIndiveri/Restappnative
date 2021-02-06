@@ -1,4 +1,4 @@
-import {SELECT_PRODUCT}from '../../types';
+import {SELECT_PRODUCT,CONFIRM_ORDER_PRODUCT}from '../../types';
 
 
 export default(state,action)=>{
@@ -7,6 +7,11 @@ export default(state,action)=>{
             return{
                 ...state,
                 platillo:action.payload,
+            }
+        case CONFIRM_ORDER_PRODUCT:
+            return{
+                ...state,
+                pedido:[...state.pedido,action.payload]
             }
         default:
             return state;

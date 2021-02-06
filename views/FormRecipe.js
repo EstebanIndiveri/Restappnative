@@ -1,15 +1,17 @@
 import React, { Fragment,useContext,useState,useEffect } from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Alert} from 'react-native';
 import PedidosContext from '../context/pedidos/pedidosContext';
-import {Container,Content,Form,Icon,Button,Grid,Col,Text,Input} from 'native-base'
+import {Container,Content,Form,Icon,Button,Grid,Col,Text,Input,Thumbnail,Footer,FooterTab} from 'native-base'
 import globalStyles from '../styles/global';
+import { useNavigation } from '@react-navigation/native';
 
 const FormRecipe = () => {
-    const {platillo}=useContext(PedidosContext);
+    const {platillo,setPedido}=useContext(PedidosContext);
     const {nombre,imagen,descripcion,precio}=platillo._data;
     // cantidades:
     const [cantidad, setCantidad] = useState(1);
     const [total,setTotal]=useState(0);
+    const navigation=useNavigation();
 
     useEffect(()=>{
         getTotal();
@@ -35,11 +37,42 @@ const FormRecipe = () => {
         setCantidad(newCount);
     }
 
-  console.log(cantidad);
+    const confirmOrder=()=>{
+        Alert.alert(
+            '¿Desea confirmar su pedido?',
+            'Un pedido confirmado ya no se podrá modificar',
+            [
+                {
+                    text:'Confirmar',
+                    onPress:()=>{
+                        const pedido={
+                            ...platillo._data,
+                            cantidad,
+                            total
+                        }
+                        setPedido(pedido);
+                        // pedido al arreglo del context
+                        // Navigate al resumen
+                        navigation.navigate('ResumeOrder');
+                    },
+                },
+                {
+                    text:'Cancelar',
+                    style:'cancel',
+                }
+            ]
+        )
+    }
+    
     return ( 
         <Fragment>
             <Container>
                 <Content>
+                    <Grid>
+                    <Col style={{justifyContent:'center',alignItems:'center',}}>
+                        <Thumbnail square style={globalStyles.imagenOrder} source={{uri:imagen}} />
+                    </Col>
+                    </Grid>
                     <Form>
                         <Text style={globalStyles.titulo}>Cantidad</Text>
                         <Grid>
@@ -75,6 +108,15 @@ const FormRecipe = () => {
                         <Text style={globalStyles.cantida}>Subtotal: ${total}</Text>
                     </Form>
                 </Content>
+                <Footer>
+                    <FooterTab>
+                        <Button style={globalStyles.button}
+                        onPress={()=>confirmOrder()}
+                        >
+                            <Text style={globalStyles.ButtonText}>Orderar Platillo</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
         </Fragment>
      );
